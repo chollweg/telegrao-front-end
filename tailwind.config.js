@@ -8,6 +8,7 @@ export default {
       primary: '#14b8a6',
       secondary: '#5eead4',
       terciary: '#0f766e',
+      red: 'ec2300'
     },
     extend: {},
   },
