@@ -8,11 +8,13 @@ function Salas(){
 
 const baseURL = "https://chat-crng.onrender.com/salas"
 const [salas, setSalas] = useState([]);
+const [messages, setMessages] = useState([])
 const nick = localStorage.getItem("nick");
 const idUser = localStorage.getItem("idUser");
 const token = localStorage.getItem("token")
 
 const navigate = useNavigate()
+
 
 const getSalas = () => {
     if(localStorage.getItem("token") === null){
@@ -33,7 +35,6 @@ useEffect(() => {
    getSalas()
 }, [])
 
-console.log(salas);
 
     return (
         <div className="flex">
@@ -41,13 +42,26 @@ console.log(salas);
                 {
                     salas.length > 0 ? salas.map((sala) => {
                         return (
-                        <Sala titulo={sala.nome} tipo={sala.tipo} />
+                        // eslint-disable-next-line react/jsx-key
+                        <Sala titulo={sala.nome} tipo={sala.tipo} evento={() => {
+                            setMessages(sala.msgs)
+                        }}/>
                         )
                     }) : ''
                 }
             </div>
             <div className="w-3/4 border-2 border-indigo-600">
-               <h1>Chat</h1> 
+               {
+                messages.length > 0 ? messages.map((message) => {
+                    return (
+                        // eslint-disable-next-line react/jsx-key
+                        <div className='flex flex-col'>
+                            <p>{message.msg}</p>
+                            <p>{message.nick}</p>
+                        </div>
+                    )
+                }) : ''
+               } 
             </div>
         </div>
     )
